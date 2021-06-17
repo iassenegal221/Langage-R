@@ -24,7 +24,8 @@ output: github_document
 
 ```{r}
 
-head(iris)
+library(kableExtra)
+head(iris) %>% kbl() %>% kable_styling()
 ```
 
 
