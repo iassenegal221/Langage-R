@@ -25,16 +25,46 @@ Introduction au package dplyr
 # Intallation de dplyr et présentation du jeu de données
 
 ``` r
-head(iris)
+library(dplyr)
 ```
 
-    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-    ## 1          5.1         3.5          1.4         0.2  setosa
-    ## 2          4.9         3.0          1.4         0.2  setosa
-    ## 3          4.7         3.2          1.3         0.2  setosa
-    ## 4          4.6         3.1          1.5         0.2  setosa
-    ## 5          5.0         3.6          1.4         0.2  setosa
-    ## 6          5.4         3.9          1.7         0.4  setosa
+    ## 
+    ## Attachement du package : 'dplyr'
+
+    ## Les objets suivants sont masqués depuis 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## Les objets suivants sont masqués depuis 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
+library(kableExtra)
+```
+
+    ## 
+    ## Attachement du package : 'kableExtra'
+
+    ## L'objet suivant est masqué depuis 'package:dplyr':
+    ## 
+    ##     group_rows
+
+``` r
+head(starwars) 
+```
+
+    ## # A tibble: 6 x 14
+    ##   name     height  mass hair_color  skin_color eye_color birth_year sex   gender
+    ##   <chr>     <int> <dbl> <chr>       <chr>      <chr>          <dbl> <chr> <chr> 
+    ## 1 Luke Sk~    172    77 blond       fair       blue            19   male  mascu~
+    ## 2 C-3PO       167    75 <NA>        gold       yellow         112   none  mascu~
+    ## 3 R2-D2        96    32 <NA>        white, bl~ red             33   none  mascu~
+    ## 4 Darth V~    202   136 none        white      yellow          41.9 male  mascu~
+    ## 5 Leia Or~    150    49 brown       light      brown           19   fema~ femin~
+    ## 6 Owen La~    178   120 brown, grey light      blue            52   male  mascu~
+    ## # ... with 5 more variables: homeworld <chr>, species <chr>, films <list>,
+    ## #   vehicles <list>, starships <list>
 
 Nous utiliserons des jeux de données intégrés dans R ou des packages de
 R dans le but de faciliter la reproductibité des exemples pratiques.
