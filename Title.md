@@ -3,7 +3,7 @@ exemple
 Amsata Niang
 17/06/2021
 
-![](dplyr1.jpg)
+![](https://robotwealth.com/wp-content/uploads/2020/04/dplyr.png)
 
 # Avantage de dplyr
 
