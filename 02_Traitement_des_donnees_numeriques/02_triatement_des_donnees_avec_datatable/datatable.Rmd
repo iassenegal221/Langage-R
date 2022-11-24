@@ -1,0 +1,303 @@
+---
+title: "Initiation a data.table"
+author: "Amsata Niang"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(data.table)
+input <- if (file.exists("flights14.csv")) {
+   "flights14.csv"
+} else {
+  "https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv"
+}
+flights <- fread(input)
+
+```
+
+```{r}
+head(flights)
+```
+
+## Introduction
+
+`data.table` fournit une version hautes performances de `data.frame` de base R avec des améliorations de syntaxe et de fonctionnalités pour une facilité d'utilisation, une commodité et une vitesse de programmation.
+
+Les opérations de manipulation de données telles que le sous-ensemble, le groupe, la mise à jour, la jointure, etc., sont toutes intrinsèquement liées.
+
+```{r}
+# install.packages("data.table")
+library(data.table)
+```
+
+-   `as.data.table()`
+
+Permet de convertir un object en class `data.table` dans la mesure du possible
+
+```{r}
+data=mtcars
+
+class(data)
+
+data=data.table::as.data.table(data)
+class(data)
+```
+
+```{}
+```
+
+# OPeration sur les colonnes `data.table`
+
+-   Sélectionnez la colonne arr_delay, mais renvoyez-la sous forme de vecteur.
+
+```{r}
+names(flights)
+```
+
+
+```{r}
+ans <- flights[, arr_delay]
+class(ans)
+```
+
+-   Sélectionnez la colonne arr_delay, mais revenez plutôt en tant que data.table.
+
+```{r}
+ans <- flights[, list(arr_delay)]
+class(ans)
+
+```
+
+-   Sélectionnez les colonnes arr_delay et dep_delay.
+
+```{r}
+ans <- flights[, .(arr_delay, dep_delay)]
+
+head(ans)
+class(ans)
+```
+
+-   Sélectionnez les colonnes arr_delay et dep_delay et renommez-les en delay_arr et delay_dep.
+
+```{r}
+ans <- flights[, .(delay_arr = arr_delay, delay_dep = dep_delay)]
+head(ans)
+
+```
+
+-   Calculer ou faire en j
+
+```{r}
+ans <- flights[, sum( (arr_delay + dep_delay) < 0 )]
+ans
+```
+
+-   Sélectionnez les colonnes nommées dans une variable à l'aide du préfixe `..`
+
+```{r}
+select_cols = c("arr_delay", "dep_delay")
+
+ans=flights[ , ..select_cols]
+
+head(ans)
+```
+
+-   Sélectionnez les colonnes nommées dans une variable en utilisant `with = FALSE`
+
+```{r}
+ans=flights[ , select_cols, with = FALSE]
+head(ans)
+
+```
+
+-   Exclure des colonnes
+
+```{r}
+# returns all columns except arr_delay and dep_delay
+
+ans <- flights[, !c("arr_delay", "dep_delay")]
+head(ans)
+```
+
+
+```{r}
+# or
+ans <- flights[, -c("arr_delay", "dep_delay")]
+head(ans)
+```
+
+
+```{r}
+ans <- flights[,`:=`(arr_delay=NULL,dep_delay=NULL)]
+head(ans)
+```
+
+```{r}
+
+# returns year,month and day
+ans <- flights[, year:day]
+head(ans)
+```
+```{r}
+# returns day, month and year
+ans <- flights[, day:year]
+
+head(ans)
+```
+```{r}
+# returns all columns except year, month and day
+ans <- flights[, -(year:day)]
+ans <- flights[, !(year:day)]
+```
+
+#Creer une variable
+
+```{r}
+ans <- flights[,`:=`(sum_var=hour + distance)]
+head(ans)
+```
+
+
+# Filter les lignes
+
+```{r}
+
+ans <- flights[origin == "JFK" & month == 6L,]
+head(ans)
+
+ans <- flights[hour<4,]
+head(ans)
+
+```
+
+```{r}
+ans <- flights[origin == "JFK" & month == 6L,
+               .(m_arr = mean(arr_delay), m_dep = mean(dep_delay))]
+head(ans)
+```
+
+-- Combien de voyages ont été effectués en 2014 depuis l'aéroport « JFK » au mois de juin ?
+
+```{r}
+ans <- flights[origin == "JFK" & month == 6L, length(dest)]
+ans
+
+```
+
+-   Symbole spécial `.N`:
+
+-   `.N` est une variable intégrée spéciale qui contient le nombre d'observations dans le groupe actuel. Il est particulièrement utile lorsqu'il est combiné avec by comme nous le verrons dans la section suivante. En l'absence d'opérations group by, il renvoie simplement le nombre de lignes du sous-ensemble.
+
+```{r}
+ans <- flights[origin == "JFK" & month == 6L, .N]
+ans
+
+```
+
+# Aggregations
+
+-   `by` accepte également un vecteur de caractères de noms de colonnes. Ceci est particulièrement utile pour le codage par programme, par exemple, la conception d'une fonction avec les colonnes de regroupement comme argument de fonction (vecteur de caractères).
+
+-   Comment calculer le nombre de trajets pour chaque aéroport d'origine pour le code transporteur « AA » ?
+
+```{r}
+ans <- flights[carrier == "AA", .N, by = month]
+ans
+
+```
+
+-   Comment pouvons-nous obtenir le nombre total de trajets pour chaque couple origine, destination pour le code de transporteur «AA»?
+
+```{r}
+ans <- flights[carrier == "AA", .N, by = .(origin, dest)]
+
+ans
+```
+
+-   Comment pouvons-nous obtenir le délai moyen d'arrivée et de départ pour chaque paire orig,dest pour chaque mois pour le code de transporteur "AA" ?
+
+```{r}
+ans <- flights[carrier == "AA",
+        .(moy_ar=mean(arr_delay), moy_dep=mean(dep_delay)),
+        by = .(origin, dest, month)]
+ans
+```
+
+-   Comme nous n'avons pas fourni de noms de colonne pour les expressions dans j, elles ont été automatiquement générées en tant que V1 et V2.
+
+Trié par : `keyby`
+
+```{r}
+ans <- flights[carrier == "AA",
+        .(mean(arr_delay), mean(dep_delay)),
+        keyby = .(origin, dest, month)]
+
+head(ans)
+
+ans2=ans[order(V2),]
+ans2
+
+```
+
+# Chaining
+
+operation 1
+
+```{r}
+ans <- flights[carrier == "AA", .N, by = .(origin, dest)]
+
+```
+
+operation 2
+
+```{r}
+ans <- ans[order(origin, -dest)]
+
+```
+
+Chaining
+
+```{r}
+ans <- flights[carrier == "AA", .N, by = .(origin, dest)][order(origin, -dest)]
+ans
+```
+
+Nous pouvons coller des expressions les unes après les autres, formant une chaîne d'opérations, c'est-à-dire `DT[ ... ][ ... ][ ... ]`\*.
+
+`DT[ ...    ][ ...     
+][ ...        
+]`
+
+Expressions en par
+
+```{r}
+ans <- flights[, .N, by=.(dep_delay>0, arr_delay>0)]
+ans
+
+```
+
+-   Symbole spécial .SD : data.table fournit un symbole spécial, appelé .SD. Il signifie sous-ensemble de données. Il s'agit en soi d'un data.table qui contient les données du groupe actuel défini à l'aide de by.
+
+```{r}
+
+DT[, lapply(.SD, mean), by = ID]
+
+```
+
+-- Comment pouvons-nous spécifier uniquement les colonnes sur lesquelles nous aimerions calculer la moyenne ()?
+
+-   `.SDcols`
+
+```{r}
+
+ans=flights[carrier == "AA",                       
+        lapply(.SD, mean),                    
+        by = .(origin, dest, month),           
+        .SDcols = c("arr_delay", "dep_delay")] 
+ans
+```
