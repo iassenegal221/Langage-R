@@ -1,6 +1,7 @@
 ---
 title: "Introduction au package dplyr"
 output: github_document
+always_allow_html: true
 ---
 
 ![](https://i.ytimg.com/vi/M2QuERvxwm0/maxresdefault.jpg)
