@@ -1,0 +1,8 @@
+---
+title: "R & Rstudio: astuces et meilleurs pratiques"
+output: html_notebook
+---
+
+# R meulleurs pratiques
+
+# R astuces

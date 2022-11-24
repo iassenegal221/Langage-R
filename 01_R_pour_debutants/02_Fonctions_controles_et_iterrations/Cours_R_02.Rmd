@@ -1,0 +1,363 @@
+---
+title: "Fonctions, controle et boucles sur R"
+output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+![](https://pbs.twimg.com/media/Dhu7ildWsAE5_Si.jpg)
+
+SI la comppréhension du langage de programmation R peut se résumer à ces
+deux slogans, alors vous conviendrez avec moi que, pour avoir une base
+solide en R, if faut
+
+1.  d'une part, connaitre ce que c'est un object R à travers ses types
+    et structures les plus courants et
+
+2.  d'autre part, connaitre ce que s'est une fonction sur R, comment l'a
+    défininir, comment faire appelle à cette derniere et quelles sont
+    les fonctions les plus usuels sur R (du packages de base)
+
+<h1 style="color:blue;font-size:50px">
+
+Les fonctions sur R
+
+</h1>
+
+<h1 style="color:blue;font-size:50px">
+
+Les fonctions primitives de R
+
+</h1>
+
+**Qu'est ce qu'une fonction primirive dans R?**
+
+Les fonctions primitives ne se trouvent que dans le package de base
+(`base`), et puisqu'elles opèrent à un bas niveau...
+
+-   **Qu'est ce qu'un package R?**
+
+Dans R, l'unité fondamentale de code partageable est le package. Un
+package regroupe du code, des données, de la documentation et des tests,
+et il est facile à partager avec d'autres. En juin 2019, plus de 14 000
+package étaient disponibles sur le Comprehensive R Archive Network, ou
+CRAN, le centre d'échange public pour les package R.
+
+**quelques fonctions primitives**
+
+-   `cos()`: calculer le cosinus d'une nombre
+-   `sin()`: calcule le sinus d'un nombre
+-   `print()`: affiche le contenu d'un objet
+-   `sum()`: calcule la somme des éléments d'un vecteur
+-   `tan()`: calcule la tangente d'une nombre
+-   `mean()`: calcule la moyenne des éléments d'un vecteur
+-   `sd()`: calcule l'écart-type des éléments d'un vecteur
+-   `plot()`: fait une représentation graphique
+-   `hist()`: représentation graphique avec un histogramme
+-   `paste()`: concaténer des textes
+-   `paste0()`: concaténer des textes
+-   `substr()`: extrait une partie d'une chaine de caractère
+-   `toupper()`: convertit une chaine en majuscule
+-   `tolower()`: convertit une chaine en minuscule
+-   `split()` :
+
+Ces fonction font utilise directement le language C.
+
+Leur ty c'eest soit `builtin` ou bien `special`
+
+Liste exhaustive des fonction primitive
+
+```{r}
+names(methods:::.BasicFunsList)
+```
+
+Vous pouvez avoir de l'aide sur ces fonctions avec l'aide de R
+
+**quelques fonctions du packages `utils`**
+
+-   `read.csv()`: permet de lire un fichier .csv
+-   `str()`: permet d'afficher les informations résumées d'un objet R
+-   `View()`: permer d'afficher un objet (par exemple un dataframe) sur
+    la fenêtre.
+
+**Comment avoir d'information sue un package `R`?**
+
+Les packages sont tres bien doccumentés. Exemples pour le packages dplyr
+ci-dessous.
+
+-   [présentation du package
+    dplyr](https://cran.r-project.org/web/packages/dplyr/dplyr.pdf)
+
+-   [documentation
+    dplyr](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8)
+
+-   [Les cheetsheet] (<https://www.rstudio.com/resources/cheatsheets/>)
+
+<h1 style="color:blue;font-size:50px">
+
+Création d'un fonction sur R
+
+</h1>
+
+-   Vous avez la possibilité de créer votre propre fonction sur R afin
+    d'effectuer des tâches répétitives avec une seule ligne de commande.
+
+L'un des meilleurs moyens d'améliorer votre portée en tant que data
+scientist est d'écrire des fonctions. Les fonctions vous permettent
+d'automatiser des tâches courantes d'une manière plus puissante et
+générale que le copier-coller. L'écriture d'une fonction présente trois
+grands avantages par rapport au copier-coller :
+
+1.  Vous pouvez donner à une fonction un nom évocateur qui rend votre
+    code plus facile à comprendre.
+
+2.  Lorsque les exigences changent, vous ne devez mettre à jour le code
+    qu'à un seul endroit, au lieu de plusieurs.
+
+3.  Vous éliminez le risque de commettre des erreurs accidentelles lors
+    du copier-coller (par exemple, mettre à jour le nom d'une variable à
+    un endroit, mais pas à un autre) (source [R for data
+    science](https://r4ds.had.co.nz/functions.html))
+
+La création d'une fonction se fait en utilisant le mot clé `function`.
+Les trois étapes clé sont:
+
+1.  Donner le nom de la fonction\
+2.  Mettre la liste des arguments de la fonction\
+3.  Mettre le code qui constitue le corps de la fonction
+
+```{r}
+
+Nom_fonction= function(arguments_séparés_par_une_virgule) {
+  #instruction
+}
+
+#addition
+
+
+addition=function(x,y){
+  
+  
+}
+
+#soustraction
+
+soustraction <- function(x,y) {
+  
+}
+
+#factoriel
+
+
+
+ma_fonction=function(...){
+  
+  paste0(...,sep=" ")
+}
+
+#
+```
+
+Il est possible créer une fonction dans une fonction. Cependant, cette
+dernière ne pourra pas être utilisé à l'extérieur de la fonction qui la
+contient.
+
+```{r}
+
+#créer une fonction qui additionne le carré des nombres en arguments
+
+addition2=function(x,y){
+  
+  
+}
+```
+
+### Comment appeller un fonction?
+
+### Scoping rule
+
+### Les fonction prefix
+
+### Infix form
+
+### fonction de remplacement
+
+<h1 style="color:blue;font-size:50px">
+
+Les Structures de controle et boucles sur R
+
+</h1>
+
+<h2 style="color:blue;font-size:30px">
+
+controle avec if
+
+</h2>
+
+**la fonction `ifelse`**
+
+**la fonction `stopifnot`** **stop** **mesage**
+
+<h2 style="color:blue;font-size:30px">
+
+witch case sur R
+
+</h2>
+
+<h2 style="color:blue;font-size:30px">
+
+La boucle for
+
+</h2>
+
+```{r,eval=FALSE}
+
+for (compteur in ensemble){
+  
+  #instruction
+}
+  
+```
+
+<h2 style="color:blue;font-size:30px">
+
+Boucle while sur R
+
+</h2>
+
+<h2 style="color:blue;font-size:30px">
+
+Boucle repeat sur R
+
+</h2>
+
+```{r}
+
+repeat {
+# statement
+  
+  if (condition){
+  break
+ }
+}
+
+
+
+```
+
+# Travaux Pratiques
+
+<https://egallic.fr/Enseignement/R/Exercices/exercices_fonctions.pdf>
+\## Exercice 1
+
+1.  Créer une fonction nommée `somme_n_entiers` qui retourne la somme
+    des n premiers entiers. Son seul paramètre sera n ;
+2.  Utiliser la fonction `somme_n_entiers()` pour calculer la somme des
+    100 premiers entiers ;
+3.  Terminer la fonction par l'assignation du résultat dans un objet
+    nommé res, puis évaluer l'expression suivante :
+    `somme_n_entiers(100)`. Que peut-on constater ?
+
+## Exercice 2
+
+Exercuter les ligne de codes suivantes pour charger un dataframe qui
+contient des information sur les prix des maison en fonction de leur
+characteristiques (surface, nombre de chambres et ville)
+
+```{r}
+house = read.table("http://www.rossmanchance.com/iscam2/data/housing.txt", header = T, 
+    sep = "\t")
+attach(house)
+names(house)
+
+
+
+```
+
+1.  Créer une fonction que l'on appellera `prix_maison`, qui, quand on
+    lui fournit le nombre de chambre, filtre le tableau de données
+    `house` pour ne conserver que les observations pour lesquelles le
+    nombre de chambre correspond à celle indiquée en paramètre, et
+    retourne le prix moyen des maisons de la base ainsi filtrée
+
+2.  Reprendre le code de la fonction précédente, et le modifier pour
+    retourner à présent une liste de deux éléments : (i) la moyenne des
+    prix et (ii) l'écart-type
+
+## Exercice 3
+
+soit le code suivant
+
+```{r}
+# @x : (int)
+f_test <- function(x){
+x^2
+}# Fin de f_test()
+# @x : (int)
+f_test_2 <- function(y){
+x^2
+}# Fin de f_test_2()
+# @x : (int)
+f_test_3 <- function(y){
+x <- y
+x^2
+}# Fin de f_test_3()
+```
+
+Expliquez ce qui se passe dans chacun des cas suivants :
+
+```{r}
+x=3
+f_test(x = 2)
+f_test_2(y = 2)
+f_test_2()
+f_test_3(4)
+x
+
+```
+
+## Exercice 4
+
+Supposons que les adresses e-mails des étudiants de l'Université de
+Rennes 1 sont constituées de la manière suivante : le prénom et le nom
+de famille séparés par un point, le symbole arobase et le enfin le nom
+de domaine. Supposons de plus que les étudiants ont un seul prénom, et
+aucune particule au nom de famille. La syntaxe des adresses e-mail est
+donc comme suit :
+[nom.prenom\@etudiant.univ-rennes1.fr](mailto:nom.prenom@etudiant.univ-rennes1.fr){.email}.
+
+```{r}
+emails <- c("amsata.niang@ias.org","fatimata.ndiaye@ias.org", "papa.wade@ias.org",
+"fatoumata.lo@ias.org","ndiaye.dia@ias.org")
+
+```
+
+Créer une fonction, qui à partir d'une adresse e-mail d'un étudiant,
+retourne un data.frame contenant trois variables : le prénom, le nom et
+l'adresse e-mail.
+
+## Exercice 5
+
+1.  Creer une fonction `factoriel()` qui calcul le factoriel d'un nombre
+    entier donné. Rappel
+    $$n!=1\times 2\times 3\times ...\times (n-1)\times n$$ et $0!=1$
+
+2.  Créer une fonction `stirl(n)` qui calcule le
+    $\sqrt{2\pi n}(\frac{n}{e})^n$
+
+3.  comparer `factoriel(100)` et `stirl(100)`
+
+## Exercice 6
+
+$$f(x)=\frac{1}{2\pi\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}} $$ 1. Creer
+une fonction `f()` qui prend comme argument $x$, $\mu$ et $\sigma$ et
+renvoie la valeur correspondante de f
+
+-   f est la fonction de densit" de la loi normale de moyenne $\mu$ et
+    de variance $\sigma^2$
+
+soit $$L(x,\mu,\sigma)=\prod_{1=1}^{n}f(x_i)$$ où $x$ représente un
+vecteur de nombre réel de longueur $n$.
+
+-   L est la fonction de vraisemblance de la loi normale.
